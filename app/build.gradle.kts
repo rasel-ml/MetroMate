@@ -13,6 +13,12 @@ plugins {
     alias(libs.plugins.jaredsburrowsLicense)
 }
 
+compose.resources {
+    // Pinned so renaming the module folder doesn't change the generated
+    // resource accessor package (mrtbuddy.composeapp.generated.resources.*).
+    packageOfResClass = "mrtbuddy.composeapp.generated.resources"
+}
+
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
