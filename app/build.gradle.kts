@@ -94,7 +94,7 @@ android {
         abi {
             isEnable = true
             reset()
-            include("arm64-v8a", "armeabi-v7a")
+            include("arm64-v8a")
             isUniversalApk = false
         }
     }
@@ -127,6 +127,16 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") {
+            // Debug builds are usually left unshrunk for faster, more debuggable
+            // builds, but shrinking here too so debug APK size reflects reality.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+        }
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
