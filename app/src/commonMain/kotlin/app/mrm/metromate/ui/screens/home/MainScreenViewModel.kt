@@ -1,0 +1,116 @@
+package app.mrm.metromate.ui.screens.home
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import app.mrm.metromate.changeLang
+import app.mrm.metromate.model.CardReadResult
+import app.mrm.metromate.model.Transaction
+import app.mrm.metromate.model.TransactionWithAmount
+import app.mrm.metromate.repository.SettingsRepository
+import app.mrm.metromate.repository.TransactionRepository
+
+class MainScreenViewModel(
+    private val transactionRepository: TransactionRepository,
+    private val initialState: MainScreenState,
+    private val settingsRepository: SettingsRepository,
+) : ViewModel() {
+    private var autoSaveEnabled: Boolean = true
+
+    private val _state: MutableStateFlow<MainScreenState> = MutableStateFlow(initialState)
+
+    init {
+        viewModelScope.launch {
+            settingsRepository.autoSaveEnabled.collect { isEnabled ->
+                autoSaveEnabled = isEnabled
+            }
+        }
+        viewModelScope.launch {
+            settingsRepository.currentLanguage.collect { language ->
+                _state.update { it.copy(currentLanguage = language) }
+            }
+        }
+        viewModelScope.launch {
+            settingsRepository.darkThemeConfig.collect { darkThemeConfig ->
+                _state.update { it.copy(darkThemeConfig = darkThemeConfig) }
+            }
+        }
+    }
+
+    val state: StateFlow<MainScreenState> get() = _state.asStateFlow()
+
+    private val _events: Channel<MainScreenEvent> = Channel(Channel.BUFFERED)
+    val events: Flow<MainScreenEvent> get() = _events.receiveAsFlow()
+
+    fun onAction(action: MainScreenAction) {
+        when (action) {
+            is MainScreenAction.OnInit -> {
+                viewModelScope.launch {
+                    val savedLanguage = settingsRepository.currentLanguage.value
+                    val darkThemeConfig = settingsRepository.darkThemeConfig.value
+                    changeLang(savedLanguage)
+                    _state.update {
+                        it.copy(
+                            currentLanguage = savedLanguage,
+                            darkThemeConfig = darkThemeConfig,
+                        )
+                    }
+                }
+            }
+
+            is MainScreenAction.UpdateCardState -> {
+                // here state has been copied over new state
+                _state.update {
+                    it.copy(cardState = action.newState)
+                }
+            }
+
+            is MainScreenAction.UpdateCardReadResult -> {
+                if (autoSaveEnabled) {
+                    saveCardReadResult(action.cardReadResult)
+                }
+                viewModelScope.launch {
+                    val card = transactionRepository.getCardByIdm(action.cardReadResult.idm)
+                    val transactionsWithAmount =
+                        transactionMapper(action.cardReadResult.transactions)
+                    _state.update {
+                        it.copy(
+                            cardIdm = action.cardReadResult.idm,
+                            cardName = card?.name,
+                            transaction = action.cardReadResult.transactions,
+                            transactionWithAmount = transactionsWithAmount,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun saveCardReadResult(result: CardReadResult) {
+        viewModelScope.launch {
+            transactionRepository.saveCardReadResult(result)
+        }
+    }
+
+    private fun transactionMapper(transactions: List<Transaction>): List<TransactionWithAmount> {
+        return transactions.mapIndexed { index, transaction ->
+            val amount =
+                if (index + 1 < transactions.size) {
+                    transaction.balance - transactions[index + 1].balance
+                } else {
+                    null
+                }
+            TransactionWithAmount(
+                transaction = transaction,
+                amount = amount,
+            )
+        }
+    }
+}

@@ -1,0 +1,19 @@
+package app.mrm.metromate.ui.screens.transactionlist
+
+import app.mrm.metromate.data.TransactionEntityWithAmount
+
+/**
+ * State for the transaction list screen, enhanced with pagination support
+ */
+data class TransactionListState(
+    val isLoading: Boolean = false,
+    val isLoadingMore: Boolean = false,
+    val isExporting: Boolean = false,
+    val transactions: List<TransactionEntityWithAmount> = emptyList(),
+    val balance: Int? = null,
+    val cardName: String? = null,
+    val error: String? = null,
+    val exportError: String? = null,
+    val canLoadMore: Boolean = true,
+    val currentOffset: Int = 0,
+)

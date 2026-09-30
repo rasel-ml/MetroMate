@@ -1,0 +1,230 @@
+package app.mrm.metromate.repository
+
+import kotlinx.datetime.toInstant
+import app.mrm.metromate.dao.CardDao
+import app.mrm.metromate.dao.ScanDao
+import app.mrm.metromate.dao.TransactionDao
+import app.mrm.metromate.data.CardEntity
+import app.mrm.metromate.data.ScanEntity
+import app.mrm.metromate.data.TransactionEntity
+import app.mrm.metromate.data.TransactionEntityWithAmount
+import app.mrm.metromate.model.CardReadResult
+import app.mrm.metromate.nfc.service.TimestampService
+
+class TransactionRepository(
+    private val cardDao: CardDao,
+    private val scanDao: ScanDao,
+    private val transactionDao: TransactionDao,
+) {
+    suspend fun saveCardReadResult(result: CardReadResult) {
+        val currentTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val cardEntity = CardEntity(idm = result.idm, name = null, lastScanTime = currentTime)
+        cardDao.insertCard(cardEntity)
+        cardDao.updateLastScanTime(result.idm, currentTime)
+
+        val scanEntity = ScanEntity(cardIdm = result.idm)
+        val scanId = scanDao.insertScan(scanEntity)
+
+        val newTransactionEntities =
+            result.transactions.map { txn ->
+                val dateTime =
+                    txn.timestamp
+                        .toInstant(TimestampService.getDefaultTimezone())
+                        .toEpochMilliseconds()
+
+                TransactionEntity(
+                    cardIdm = result.idm,
+                    scanId = scanId,
+                    fromStation = txn.fromStation,
+                    toStation = txn.toStation,
+                    balance = txn.balance,
+                    dateTime = dateTime,
+                    fixedHeader = txn.fixedHeader,
+                )
+            }
+
+        val lastOrder = transactionDao.getLastOrder() ?: 0
+        val transactionsToInsert =
+            newTransactionEntities
+                .reversed()
+                .mapIndexed { index, entity ->
+                    entity.copy(order = lastOrder + index + 1)
+                }
+
+        transactionDao.insertTransactions(transactionsToInsert)
+    }
+
+    suspend fun getCardByIdm(idm: String): CardEntity? {
+        return cardDao.getCardByIdm(idm)
+    }
+
+    suspend fun getAllCards(): List<CardEntity> {
+        return cardDao.getAllCards()
+    }
+
+    suspend fun getTransactionsByCardIdm(cardIdm: String): List<TransactionEntityWithAmount> {
+        val transactions = transactionDao.getTransactionsByCardIdm(cardIdm)
+
+        val sortedTransactions = transactions.sortedByDescending { it.order }
+        return sortedTransactions.mapIndexed { index, transaction ->
+            val amount =
+                if (index + 1 < sortedTransactions.size) {
+                    transaction.balance - sortedTransactions[index + 1].balance
+                } else {
+                    null
+                }
+            TransactionEntityWithAmount(transactionEntity = transaction, amount = amount)
+        }.filter { transaction -> transaction.amount != null }
+    }
+
+    /**
+     * Loads a batch of transactions with pagination support
+     * @param cardIdm The card identifier
+     * @param limit Maximum number of transactions to retrieve
+     * @param offset The starting position (0-based)
+     * @return Result containing transactions with amounts calculated, end-of-list status, and next offset
+     */
+    suspend fun getTransactionsByCardIdmLazy(
+        cardIdm: String,
+        limit: Int = 20,
+        offset: Int = 0,
+    ): LazyLoadResult {
+        // Fetch one extra transaction to help calculate the amount for the last visible transaction
+        val fetchLimit = limit + 1
+        val transactions = transactionDao.getTransactionsByCardIdmPaginated(cardIdm, fetchLimit, offset)
+
+        // Determine if we've reached the end
+        val isEndReached = transactions.size < fetchLimit
+
+        // Process transactions for display (excluding the extra one if present)
+        val displayTransactions =
+            if (transactions.size > limit) {
+                transactions.take(limit)
+            } else {
+                transactions
+            }
+
+        // Calculate amounts with special handling for batch boundaries
+        val transactionsWithAmount = calculateAmounts(displayTransactions, transactions.getOrNull(limit))
+
+        return LazyLoadResult(
+            transactions = transactionsWithAmount,
+            isEndReached = isEndReached,
+            nextOffset = offset + displayTransactions.size,
+        )
+    }
+
+    /**
+     * Calculate transaction amounts, using the nextTransaction for the last item if available
+     */
+    private fun calculateAmounts(
+        transactions: List<TransactionEntity>,
+        nextTransaction: TransactionEntity?,
+    ): List<TransactionEntityWithAmount> {
+        if (transactions.isEmpty()) return emptyList()
+
+        val result = mutableListOf<TransactionEntityWithAmount>()
+
+        // Process all but the last transaction using adjacent pairs
+        for (i in 0 until transactions.size - 1) {
+            val current = transactions[i]
+            val next = transactions[i + 1]
+            val amount = current.balance - next.balance
+
+            result.add(TransactionEntityWithAmount(current, amount))
+        }
+
+        // Process the last transaction using the extra transaction if available
+        val lastTransaction = transactions.last()
+        val lastAmount =
+            if (nextTransaction != null) {
+                lastTransaction.balance - nextTransaction.balance
+            } else {
+                null
+            }
+
+        result.add(TransactionEntityWithAmount(lastTransaction, lastAmount))
+
+        return result.filter { it.amount != null }
+    }
+
+    suspend fun getLatestBalanceByCardIdm(cardIdm: String): Int? {
+        return transactionDao.getLatestTransactionByCardIdm(cardIdm)?.balance
+    }
+
+    suspend fun renameCard(
+        cardIdm: String,
+        newName: String,
+    ) {
+        cardDao.updateCardName(cardIdm, newName)
+    }
+
+    suspend fun deleteCard(cardIdm: String) {
+        cardDao.deleteCard(cardIdm)
+        scanDao.deleteScansByCardIdm(cardIdm)
+        transactionDao.deleteTransactionsByCardIdm(cardIdm)
+    }
+
+    /**
+     * Get total transaction count for a card (for progress tracking)
+     */
+    suspend fun getTransactionCount(cardIdm: String): Int {
+        return transactionDao.getTransactionCountByCardIdm(cardIdm)
+    }
+
+    /**
+     * Get a batch of transactions for export with calculated amounts.
+     * Uses pagination to avoid loading all data into memory.
+     *
+     * @param cardIdm The card identifier
+     * @param limit Batch size
+     * @param offset Starting position
+     * @return Batch of transactions with amounts, plus the next transaction for amount calculation
+     */
+    suspend fun getTransactionBatchForExport(
+        cardIdm: String,
+        limit: Int,
+        offset: Int,
+    ): ExportBatchResult {
+        // Fetch one extra to calculate amount for last item in batch
+        val fetchLimit = limit + 1
+        val transactions = transactionDao.getTransactionsByCardIdmPaginated(cardIdm, fetchLimit, offset)
+
+        if (transactions.isEmpty()) {
+            return ExportBatchResult(emptyList(), hasMore = false)
+        }
+
+        val hasMore = transactions.size > limit
+        val batchTransactions = if (hasMore) transactions.take(limit) else transactions
+        val nextTransaction = if (hasMore) transactions[limit] else null
+
+        // Calculate amounts
+        val result = ArrayList<TransactionEntityWithAmount>(batchTransactions.size)
+        for (i in batchTransactions.indices) {
+            val transaction = batchTransactions[i]
+            val amount =
+                when {
+                    i + 1 < batchTransactions.size -> transaction.balance - batchTransactions[i + 1].balance
+                    nextTransaction != null -> transaction.balance - nextTransaction.balance
+                    else -> null
+                }
+            result.add(TransactionEntityWithAmount(transactionEntity = transaction, amount = amount))
+        }
+
+        return ExportBatchResult(result, hasMore)
+    }
+
+    data class ExportBatchResult(
+        val transactions: List<TransactionEntityWithAmount>,
+        val hasMore: Boolean,
+    )
+
+    /**
+     * Data class to return batched results for lazy loading
+     */
+    data class LazyLoadResult(
+        val transactions: List<TransactionEntityWithAmount>,
+        val isEndReached: Boolean,
+        val nextOffset: Int,
+    )
+}
