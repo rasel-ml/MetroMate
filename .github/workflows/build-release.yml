@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HAS_KEYSTORE_SECRET: ${{ secrets.KEYSTORE_BASE64 != '' }}
 
     steps:
       - name: Checkout
@@ -24,7 +26,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode signing keystore (optional)
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+        if: ${{ env.HAS_KEYSTORE_SECRET == 'true' }}
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/keystore.jks
 
       - name: Build release APK
