@@ -24,7 +24,6 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
@@ -80,7 +79,6 @@ fun StationMapScreen(
                 ),
             contentDescription = "Station Map",
             contentScale = ContentScale.Fit,
-            filterQuality = FilterQuality.High,
             modifier =
                 Modifier
                     .fillMaxSize()
