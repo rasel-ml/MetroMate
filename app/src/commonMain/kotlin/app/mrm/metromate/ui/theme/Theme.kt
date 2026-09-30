@@ -84,7 +84,7 @@ val darkScheme =
     )
 
 @Composable
-expect fun MRTBuddyTheme(
+expect fun MetroMateTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit,

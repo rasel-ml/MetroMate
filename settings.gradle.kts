@@ -1,4 +1,4 @@
-rootProject.name = "MRTBuddy"
+rootProject.name = "MetroMate"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

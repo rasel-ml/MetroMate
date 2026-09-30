@@ -114,6 +114,14 @@ android {
             )
         }
     }
+    // A real release keystore (see keystore.jks + KEYSTORE_PASSWORD/KEY_ALIAS/
+    // KEY_PASSWORD) is only needed for a signature that's meant to last across
+    // updates (e.g. Play Store). Without it, release builds fall back to the
+    // debug keystore so the APK is still installable for local/CI testing.
+    val hasReleaseKeystore =
+        file("keystore.jks").let { it.exists() && it.length() > 0 } &&
+            !System.getenv("KEYSTORE_PASSWORD").isNullOrBlank()
+
     signingConfigs {
         create("release") {
             storeFile = file("keystore.jks")
@@ -138,7 +146,12 @@ android {
             )
         }
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig =
+                if (hasReleaseKeystore) {
+                    signingConfigs.getByName("release")
+                } else {
+                    signingConfigs.getByName("debug")
+                }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

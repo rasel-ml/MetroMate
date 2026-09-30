@@ -13,7 +13,7 @@ import app.mrm.metromate.ui.screens.home.MainScreenAction
 import app.mrm.metromate.ui.screens.home.MainScreenEvent
 import app.mrm.metromate.ui.screens.home.MainScreenState
 import app.mrm.metromate.ui.screens.home.MainScreenViewModel
-import app.mrm.metromate.ui.theme.MRTBuddyTheme
+import app.mrm.metromate.ui.theme.MetroMateTheme
 import app.mrm.metromate.utils.observeAsActions
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -56,7 +56,7 @@ fun App(dynamicColor: Boolean) {
 
     val state: MainScreenState by mainVm.state.collectAsState()
 
-    MRTBuddyTheme(
+    MetroMateTheme(
         darkTheme =
             when (state.darkThemeConfig) {
                 DarkThemeConfig.FOLLOW_SYSTEM -> isSystemInDarkTheme()
