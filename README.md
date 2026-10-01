@@ -17,11 +17,11 @@
 
 ## Acknowledgements
 
-MetroMate is based on and built upon [MRT Buddy](https://github.com/aniruddha-adhikary/mrt-buddy), licensed under the [GNU General Public License (GPL)](LICENCE).
+MetroMate is based on and built upon [MRT Buddy](https://github.com/aniruddha-adhikary/mrt-buddy), licensed under the [GNU General Public License (GPL)](https://github.com/aniruddha-adhikary/mrt-buddy/blob/master/LICENCE).
 
 The main goal of MetroMate is to provide the same core functionality in a significantly smaller and more lightweight application.
 
-> [!Note]
+> [!NOTE]
 > MetroMate is an unofficial and independent project and is not officially endorsed by or affiliated with Dhaka Mass Transit Company Limited (DMTCL).
 
 
@@ -36,8 +36,4 @@ No laptop or desktop computer was used in the development of this project.
 ## Copyright
 Copyright (C) 2026 Md. Rasel Molla
 
-This program is free software.
-You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the [GNU General Public License (GPL)](LICENCE) for more details.
+MetroMate is free software licensed under the [GNU General Public License (GPL)](LICENCE).
