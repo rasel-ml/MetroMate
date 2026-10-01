@@ -11,7 +11,13 @@ Inspired from MRT Buddy.
 - Completely offline.
 - Just one tap to check balance
 - Works with both MRT Pass and Rapid Pass
-- View transaction history with rolling storage[^*]
-- Calculate fare and see how many round trips you can make
+- View transaction history[^1]
+- Travel fare calculator
 
-[^*]: While the card stores up to 20 transactions, regularly scanning your card allows you to build a comprehensive history of thousands of transactions on your phone.
+[^1]: The card only stores up to 20 transactions, regularly scanning your card allows you to build a comprehensive history of thousands of transactions on your phone.
+
+> [!IMPORTANT]
+> Your phone must be NFC Compatible to use the app.
+
+> [!Note]
+> This is an independent project and is not officially endorsed by or affiliated with Dhaka Mass Transit Company Limited (DMTCL).
