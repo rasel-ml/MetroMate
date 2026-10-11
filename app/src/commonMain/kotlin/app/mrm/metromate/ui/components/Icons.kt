@@ -1,9 +1,10 @@
 package app.mrm.metromate.ui.components
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.apps
 import mrtbuddy.composeapp.generated.resources.calculate
 import mrtbuddy.composeapp.generated.resources.card
 import mrtbuddy.composeapp.generated.resources.history
@@ -26,10 +27,10 @@ public fun CardIcon() {
 }
 
 @Composable
-public fun AppsIcon() {
+public fun SettingsIcon() {
     return Icon(
-        painter = painterResource(Res.drawable.apps),
-        contentDescription = "Apps",
+        imageVector = Icons.Filled.Settings,
+        contentDescription = "Settings",
     )
 }
 

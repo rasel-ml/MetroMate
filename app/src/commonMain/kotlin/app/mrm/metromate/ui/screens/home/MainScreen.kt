@@ -32,19 +32,17 @@ import mrtbuddy.composeapp.generated.resources.Res
 import mrtbuddy.composeapp.generated.resources.balance
 import mrtbuddy.composeapp.generated.resources.fare
 import mrtbuddy.composeapp.generated.resources.historyTab
-import mrtbuddy.composeapp.generated.resources.more
-import mrtbuddy.composeapp.generated.resources.openSourceLicenses
+import mrtbuddy.composeapp.generated.resources.settings
 import mrtbuddy.composeapp.generated.resources.stationMap
 import mrtbuddy.composeapp.generated.resources.transactions
-import app.mrm.metromate.ui.components.AppsIcon
 import app.mrm.metromate.ui.components.BalanceCard
 import app.mrm.metromate.ui.components.CalculatorIcon
 import app.mrm.metromate.ui.components.CardIcon
 import app.mrm.metromate.ui.components.HistoryIcon
+import app.mrm.metromate.ui.components.SettingsIcon
 import app.mrm.metromate.ui.components.TransactionHistoryList
 import app.mrm.metromate.ui.screens.farecalculator.FareCalculatorScreen
 import app.mrm.metromate.ui.screens.history.HistoryScreen
-import app.mrm.metromate.ui.screens.licenses.OpenSourceLicensesScreen
 import app.mrm.metromate.ui.screens.stationmap.StationMapScreen
 import app.mrm.metromate.ui.screens.transactionlist.TransactionListScreen
 import org.jetbrains.compose.resources.StringResource
@@ -54,11 +52,10 @@ import org.koin.compose.viewmodel.koinViewModel
 enum class Screen(val title: StringResource) {
     Home(title = Res.string.balance),
     Calculator(title = Res.string.fare),
-    More(title = Res.string.more),
+    More(title = Res.string.settings),
     History(title = Res.string.historyTab),
     TransactionList(title = Res.string.transactions),
     StationMap(title = Res.string.stationMap),
-    Licenses(title = Res.string.openSourceLicenses),
 }
 
 @Composable
@@ -131,8 +128,8 @@ fun MainScreen(
                         },
                     )
                     NavigationBarItem(
-                        icon = { AppsIcon() },
-                        label = { Text(stringResource(Res.string.more)) },
+                        icon = { SettingsIcon() },
+                        label = { Text(stringResource(Res.string.settings)) },
                         selected = currentScreen == Screen.More,
                         onClick = {
                             navController.navigate(Screen.More.name) {
@@ -179,18 +176,15 @@ fun MainScreen(
             composable(route = Screen.Calculator.name) {
                 FareCalculatorScreen(
                     cardState = uiState.cardState,
+                    onNavigateToStationMap = {
+                        navController.navigate(Screen.StationMap.name)
+                    },
                     modifier = Modifier.padding(paddingValues),
                 )
             }
 
             composable(route = Screen.More.name) {
                 MoreScreen(
-                    onNavigateToStationMap = {
-                        navController.navigate(Screen.StationMap.name)
-                    },
-                    onNavigateToLicenses = {
-                        navController.navigate(Screen.Licenses.name)
-                    },
                     modifier = Modifier.padding(paddingValues),
                 )
             }
@@ -222,15 +216,6 @@ fun MainScreen(
                     onBack = {
                         navController.navigateUp()
                     },
-                )
-            }
-
-            composable(route = Screen.Licenses.name) {
-                OpenSourceLicensesScreen(
-                    onBack = {
-                        navController.navigateUp()
-                    },
-                    paddingValues = paddingValues,
                 )
             }
         }

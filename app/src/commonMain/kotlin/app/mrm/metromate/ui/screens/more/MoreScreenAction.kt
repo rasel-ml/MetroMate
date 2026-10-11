@@ -10,8 +10,4 @@ sealed interface MoreScreenAction {
     data class SetLanguage(val language: String) : MoreScreenAction
 
     data class SetDarkThemeConfig(val darkThemeConfig: DarkThemeConfig) : MoreScreenAction
-
-    object StationMap : MoreScreenAction
-
-    object OpenLicenses : MoreScreenAction
 }

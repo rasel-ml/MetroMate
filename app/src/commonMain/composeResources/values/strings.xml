@@ -1,7 +1,6 @@
 <resources>
     <string name="balance">Balance</string>
     <string name="fare">Fare</string>
-    <string name="more">More</string>
     <string name="historyTab">History</string>
     <string name="language">Language</string>
     <string name="rescan">Rescan</string>
@@ -64,11 +63,6 @@
     <string name="balanceAmount">Balance</string>
 
     <!-- more screen -->
-    <string name="aboutHeader">About</string>
-    <string name="privacyPolicy">Privacy Policy</string>
-    <string name="helpAndSupportButton">Help and Support</string>
-    <string name="nonAffiliationDisclaimer">This is an independent project and is not officially endorsed by or affiliated with Dhaka Mass Transit Company Limited (DMTCL).</string>
-    <string name="readOnlyDisclaimer">The app is designed solely for reading card information and does not support recharging, topping up, or modifying card balances.</string>
     
     <!-- History and Transaction screens -->
     <string name="transactions">Transactions</string>
@@ -99,7 +93,6 @@
     <string name="autoSaveCardDetailsDescription">Automatically save card details when scanning</string>
 
     <!-- Others screen -->
-    <string name="others">Others</string>
     <string name="stationMap">Metro Station Map</string>
 
     <!-- Time ago strings -->
@@ -114,8 +107,6 @@
     <string name="monthsAgo">months ago</string>
     <string name="yearAgo">year ago</string>
     <string name="yearsAgo">years ago</string>
-    <string name="contributors">Contributors</string>
-    <string name="openSourceLicenses">Open Source Licenses</string>
 
     <!-- Export strings -->
     <string name="exportingTransactions">Exporting transactions...</string>

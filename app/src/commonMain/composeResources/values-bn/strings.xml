@@ -1,7 +1,6 @@
 <resources>
     <string name="balance">ব্যালেন্স</string>
     <string name="fare">ভাড়া</string>
-    <string name="more">অন্যান্য</string>
     <string name="historyTab">ইতিহাস</string>
     <string name="language">ভাষা</string>
     <string name="rescan">পুনরায় স্ক্যান</string>
@@ -64,11 +63,6 @@
     <string name="balanceAmount">ব্যালেন্স</string>
 
     <!-- more screen -->
-    <string name="aboutHeader">আরও জানুন</string>
-    <string name="privacyPolicy">গোপনীয়তা নীতি</string>
-    <string name="helpAndSupportButton">সাহায্য</string>
-    <string name="nonAffiliationDisclaimer">এটি একটি স্বাধীন প্রকল্প এবং এটি ঢাকা ম্যাস ট্রানজিট কোম্পানি লিমিটেড (ডিএমটিসিএল) দ্বারা আনুষ্ঠানিকভাবে অনুমোদিত বা সংযুক্ত নয়।</string>
-    <string name="readOnlyDisclaimer">অ্যাপটি শুধুমাত্র কার্ডের তথ্য পড়তে সক্ষম, এবং কার্ডের ব্যালেন্স রিচার্জ, টপ-আপ বা পরিবর্তন করতে সক্ষম নয়।</string>
 
     <!-- History and Transaction screens -->
     <string name="transactions">লেনদেন</string>
@@ -99,7 +93,6 @@
     <string name="autoSaveCardDetailsDescription">স্ক্যান করার সময় স্বয়ংক্রিয়ভাবে কার্ডের তথ্য সংরক্ষণ করুন</string>
 
     <!-- Others screen -->
-    <string name="others">অন্যান্য</string>
     <string name="stationMap">মেট্রো স্টেশন ম্যাপ</string>
 
     <!-- Time ago strings -->
@@ -114,8 +107,6 @@
     <string name="monthsAgo">মাস আগে</string>
     <string name="yearAgo">বছর আগে</string>
     <string name="yearsAgo">বছর আগে</string>
-    <string name="contributors">অবদানকারীগণ</string>
-    <string name="openSourceLicenses">ওপেন সোর্স লাইসেন্স</string>
 
     <!-- Export strings -->
     <string name="exportingTransactions">লেনদেন এক্সপোর্ট হচ্ছে...</string>

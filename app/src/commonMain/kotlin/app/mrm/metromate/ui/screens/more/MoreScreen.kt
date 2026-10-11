@@ -21,33 +21,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.collectLatest
 import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.aboutHeader
 import mrtbuddy.composeapp.generated.resources.autoSaveCardDetails
 import mrtbuddy.composeapp.generated.resources.autoSaveCardDetailsDescription
-import mrtbuddy.composeapp.generated.resources.contributors
 import mrtbuddy.composeapp.generated.resources.dark_mode
 import mrtbuddy.composeapp.generated.resources.dark_mode_config_dark
 import mrtbuddy.composeapp.generated.resources.dark_mode_config_light
 import mrtbuddy.composeapp.generated.resources.dark_mode_config_system_default
 import mrtbuddy.composeapp.generated.resources.dark_mode_preference
-import mrtbuddy.composeapp.generated.resources.help
-import mrtbuddy.composeapp.generated.resources.helpAndSupportButton
 import mrtbuddy.composeapp.generated.resources.language
-import mrtbuddy.composeapp.generated.resources.license
-import mrtbuddy.composeapp.generated.resources.nonAffiliationDisclaimer
-import mrtbuddy.composeapp.generated.resources.openSourceLicenses
-import mrtbuddy.composeapp.generated.resources.others
-import mrtbuddy.composeapp.generated.resources.policy
-import mrtbuddy.composeapp.generated.resources.privacyPolicy
-import mrtbuddy.composeapp.generated.resources.readOnlyDisclaimer
 import mrtbuddy.composeapp.generated.resources.settings
-import mrtbuddy.composeapp.generated.resources.stationMap
-import mrtbuddy.composeapp.generated.resources.station_map
 import app.mrm.metromate.Language
 import app.mrm.metromate.settings.model.DarkThemeConfig
 import app.mrm.metromate.ui.screens.more.MoreScreenAction
@@ -59,12 +45,9 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun MoreScreen(
-    onNavigateToStationMap: () -> Unit,
-    onNavigateToLicenses: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MoreScreenViewModel = koinViewModel(),
 ) {
-    val uriHandler = LocalUriHandler.current
     val uiState by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -76,12 +59,6 @@ fun MoreScreen(
             when (event) {
                 is MoreScreenEvent.Error -> {
                     // Handle error event (e.g., show a Toast or Snackbar)
-                }
-                is MoreScreenEvent.NavigateTooStationMap -> {
-                    onNavigateToStationMap()
-                }
-                is MoreScreenEvent.NavigateToLicenses -> {
-                    onNavigateToLicenses()
                 }
             }
         }
@@ -154,71 +131,6 @@ fun MoreScreen(
                         modifier = Modifier.padding(end = 8.dp),
                     )
                 },
-            )
-
-            SectionHeader(text = stringResource(Res.string.others))
-            RoundedButton(
-                text = stringResource(Res.string.stationMap),
-                painter = painterResource(Res.drawable.station_map),
-                onClick = {
-                    viewModel.onAction(MoreScreenAction.StationMap)
-                },
-            )
-
-            SectionHeader(text = stringResource(Res.string.aboutHeader))
-            RoundedButton(
-                text = stringResource(Res.string.privacyPolicy),
-                painter = painterResource(Res.drawable.policy),
-                onClick = {
-                    uriHandler.openUri("https://mrtbuddy.com/privacy-policy")
-                },
-            )
-            RoundedButton(
-                text = stringResource(Res.string.helpAndSupportButton),
-                painter = painterResource(Res.drawable.help),
-                onClick = {
-                    uriHandler.openUri("https://mrtbuddy.com/support")
-                },
-            )
-            RoundedButton(
-                text = stringResource(Res.string.contributors),
-                painter = painterResource(Res.drawable.contributors),
-                onClick = {
-                    uriHandler.openUri("https://mrtbuddy.com/contributors.html")
-                },
-            )
-            RoundedButton(
-                text = stringResource(Res.string.openSourceLicenses),
-                painter = painterResource(Res.drawable.license), // Ensure you have a 'license' drawable
-                onClick = {
-                    viewModel.onAction(MoreScreenAction.OpenLicenses)
-                },
-            )
-        }
-
-        Column {
-            Text(
-                text = stringResource(Res.string.nonAffiliationDisclaimer),
-                fontSize = 12.sp,
-                lineHeight = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                modifier = Modifier.padding(vertical = 8.dp),
-            )
-
-            Text(
-                text = stringResource(Res.string.readOnlyDisclaimer),
-                fontSize = 12.sp,
-                lineHeight = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                modifier = Modifier.padding(vertical = 8.dp),
-            )
-
-            Text(
-                text = "Copyright © 2025 Aniruddha Adhikary.",
-                fontSize = 12.sp,
-                lineHeight = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                modifier = Modifier.padding(bottom = 8.dp),
             )
         }
     }
