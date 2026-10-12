@@ -1,6 +1,6 @@
 <img src=".github/raw/banner.webp" alt="App Banner" width="100%"></img>
 <p align="center"></p>
-<h1 align="center"><span><img src=".github/raw/icon.webp" alt="App Icon" height="28" width="28"></span><span>  MetroMate</span></h1>
+<h1 align="center"><span><img src=".github/raw/icon.webp" alt="App Icon" height="29" width="29"></span><span>  MetroMate</span></h1>
 <p align="center">A convenient Android app for checking your Dhaka MRT Card balance on the go.</p>
 
 ## Features
@@ -27,7 +27,13 @@
 
 MetroMate is based on and built upon [MRT Buddy](https://github.com/aniruddha-adhikary/mrt-buddy), licensed under the [GNU General Public License (GPL)](https://github.com/aniruddha-adhikary/mrt-buddy/blob/master/LICENCE).
 
-The main goal of MetroMate is to provide the same core functionality in a significantly smaller and more lightweight application.
+The main goal of MetroMate is to provide the same core functionality in a **significantly smaller** and more **lightweight** application.
+
+**Size Comparison**
+| App Name | APK Size | Installed Size |
+|---|---:|---:|
+| MRT Buddy | 17.3 MB | 40 MB+ |
+| MetroMate | 1.46 MB | ~10 MB |
 
 > [!NOTE]
 > MetroMate is an unofficial and independent project and is not officially endorsed by or affiliated with Dhaka Mass Transit Company Limited (DMTCL).
