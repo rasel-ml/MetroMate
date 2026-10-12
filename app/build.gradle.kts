@@ -118,12 +118,12 @@ android {
     // updates (e.g. Play Store). Without it, release builds fall back to the
     // debug keystore so the APK is still installable for local/CI testing.
     val hasReleaseKeystore =
-        file("MetroMate.p12").let { it.exists() && it.length() > 0 } &&
+        file("keystore.jks").let { it.exists() && it.length() > 0 } &&
             !System.getenv("KEYSTORE_PASSWORD").isNullOrBlank()
 
     signingConfigs {
         create("release") {
-            storeFile = file("MetroMate.p12")
+            storeFile = file("keystore.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
             keyAlias = System.getenv("KEY_ALIAS")
             keyPassword = System.getenv("KEY_PASSWORD")
