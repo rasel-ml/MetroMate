@@ -94,6 +94,7 @@
 
     <!-- Others screen -->
     <string name="stationMap">মেট্রো স্টেশন ম্যাপ</string>
+    <string name="seeStationMap">মেট্রো স্টেশন ম্যাপ দেখুন</string>
 
     <!-- Time ago strings -->
     <string name="justNow">এইমাত্র</string>

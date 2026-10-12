@@ -18,10 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.enableNfc
-import mrtbuddy.composeapp.generated.resources.nfcDisabled
-import mrtbuddy.composeapp.generated.resources.openNfcSettings
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.enableNfc
+import app.mrm.metromate.generated.resources.nfcDisabled
+import app.mrm.metromate.generated.resources.openNfcSettings
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

@@ -1,19 +1,19 @@
 package app.mrm.metromate.utils
 
 import androidx.compose.runtime.Composable
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.dayAgo
+import app.mrm.metromate.generated.resources.daysAgo
+import app.mrm.metromate.generated.resources.hourAgo
+import app.mrm.metromate.generated.resources.hoursAgo
+import app.mrm.metromate.generated.resources.justNow
+import app.mrm.metromate.generated.resources.minuteAgo
+import app.mrm.metromate.generated.resources.minutesAgo
+import app.mrm.metromate.generated.resources.monthAgo
+import app.mrm.metromate.generated.resources.monthsAgo
+import app.mrm.metromate.generated.resources.yearAgo
+import app.mrm.metromate.generated.resources.yearsAgo
 import kotlinx.datetime.Clock
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.dayAgo
-import mrtbuddy.composeapp.generated.resources.daysAgo
-import mrtbuddy.composeapp.generated.resources.hourAgo
-import mrtbuddy.composeapp.generated.resources.hoursAgo
-import mrtbuddy.composeapp.generated.resources.justNow
-import mrtbuddy.composeapp.generated.resources.minuteAgo
-import mrtbuddy.composeapp.generated.resources.minutesAgo
-import mrtbuddy.composeapp.generated.resources.monthAgo
-import mrtbuddy.composeapp.generated.resources.monthsAgo
-import mrtbuddy.composeapp.generated.resources.yearAgo
-import mrtbuddy.composeapp.generated.resources.yearsAgo
 import org.jetbrains.compose.resources.stringResource
 
 object TimeUtils {

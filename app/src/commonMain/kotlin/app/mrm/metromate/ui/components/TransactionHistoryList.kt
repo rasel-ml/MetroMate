@@ -21,10 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import kotlinx.datetime.LocalDateTime
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.balanceUpdate
-import mrtbuddy.composeapp.generated.resources.recentJourneys
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.balanceUpdate
+import app.mrm.metromate.generated.resources.recentJourneys
 import app.mrm.metromate.model.TransactionType
 import app.mrm.metromate.model.TransactionWithAmount
 import app.mrm.metromate.nfc.service.StationService
@@ -34,6 +33,7 @@ import app.mrm.metromate.ui.theme.DarkNegativeRed
 import app.mrm.metromate.ui.theme.DarkPositiveGreen
 import app.mrm.metromate.ui.theme.LightNegativeRed
 import app.mrm.metromate.ui.theme.LightPositiveGreen
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

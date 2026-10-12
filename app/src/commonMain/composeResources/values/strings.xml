@@ -94,6 +94,7 @@
 
     <!-- Others screen -->
     <string name="stationMap">Metro Station Map</string>
+    <string name="seeStationMap">See Metro Station Map</string>
 
     <!-- Time ago strings -->
     <string name="justNow">Just now</string>

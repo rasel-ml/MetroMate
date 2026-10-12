@@ -2,9 +2,9 @@ package app.mrm.metromate.ui.screens.farecalculator
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,13 +18,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.flow.collectLatest
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.station_map
-import mrtbuddy.composeapp.generated.resources.stationMap
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.seeStationMap
+import app.mrm.metromate.generated.resources.station_map
 import app.mrm.metromate.model.CardState
 import app.mrm.metromate.ui.screens.components.FareDisplayCard
 import app.mrm.metromate.ui.screens.components.StationSelectionSection
+import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -74,9 +74,9 @@ fun FareCalculatorScreen(
         Spacer(modifier = Modifier.weight(1f))
         Button(
             onClick = onNavigateToStationMap,
-            modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(),
+            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 14.dp),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.station_map),
@@ -84,7 +84,7 @@ fun FareCalculatorScreen(
                 modifier = Modifier.height(20.dp),
             )
             Text(
-                text = stringResource(Res.string.stationMap),
+                text = stringResource(Res.string.seeStationMap),
                 modifier = Modifier.padding(start = 8.dp),
             )
         }

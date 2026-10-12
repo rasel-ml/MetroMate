@@ -2,12 +2,12 @@ package app.mrm.metromate.nfc.service
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.intl.Locale
+import app.mrm.metromate.generated.resources.*
+import app.mrm.metromate.translateNumber
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import mrtbuddy.composeapp.generated.resources.*
-import app.mrm.metromate.translateNumber
 import org.jetbrains.compose.resources.stringResource
 
 object TimestampService {

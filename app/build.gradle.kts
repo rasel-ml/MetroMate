@@ -1,4 +1,3 @@
-import com.github.jk1.license.render.InventoryMarkdownReportRenderer
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -10,13 +9,13 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
-    alias(libs.plugins.jaredsburrowsLicense)
 }
 
 compose.resources {
-    // Pinned so renaming the module folder doesn't change the generated
-    // resource accessor package (mrtbuddy.composeapp.generated.resources.*).
-    packageOfResClass = "mrtbuddy.composeapp.generated.resources"
+    // Pinned (rather than left to the Compose default, which derives this
+    // from the root project + module name) so renaming either one doesn't
+    // change the generated resource accessor package.
+    packageOfResClass = "app.mrm.metromate.generated.resources"
 }
 
 kotlin {
@@ -119,12 +118,12 @@ android {
     // updates (e.g. Play Store). Without it, release builds fall back to the
     // debug keystore so the APK is still installable for local/CI testing.
     val hasReleaseKeystore =
-        file("keystore.jks").let { it.exists() && it.length() > 0 } &&
+        file("MetroMate.p12").let { it.exists() && it.length() > 0 } &&
             !System.getenv("KEYSTORE_PASSWORD").isNullOrBlank()
 
     signingConfigs {
         create("release") {
-            storeFile = file("keystore.jks")
+            storeFile = file("MetroMate.p12")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
             keyAlias = System.getenv("KEY_ALIAS")
             keyPassword = System.getenv("KEY_PASSWORD")
@@ -181,59 +180,4 @@ dependencies {
 
 room {
     schemaDirectory("$projectDir/schemas")
-}
-
-licenseReport {
-    unionParentPomLicenses = false
-    renderers =
-        arrayOf(
-            InventoryMarkdownReportRenderer(
-                "open-source-licenses.md",
-                "Open Source Libraries",
-            ),
-        )
-}
-
-tasks.register("processLicenseReport") {
-    dependsOn("generateLicenseReport")
-
-    doLast {
-        val reportPath = file("build/reports/dependency-license/open-source-licenses.md")
-        val processedPath = file("build/reports/dependency-license/processed-open-source-licenses.md")
-
-        if (!reportPath.exists()) {
-            throw GradleException("License report not found at $reportPath")
-        }
-
-        val content = reportPath.readText()
-        val processedContent =
-            content.replace(
-                Regex("_\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} [A-Z]+_"),
-                "",
-            )
-        processedPath.writeText(processedContent)
-    }
-}
-
-tasks.register("copyLicenseReportToAssets") {
-    dependsOn("processLicenseReport")
-
-    doLast {
-        val processedPath = file("build/reports/dependency-license/processed-open-source-licenses.md")
-        val commonAssetsPath = file("src/commonMain/composeResources/files")
-
-        if (!processedPath.exists()) {
-            throw GradleException("Processed license report not found at $processedPath")
-        }
-
-        copy {
-            from(processedPath)
-            into(commonAssetsPath)
-            rename { "open-source-licenses.md" }
-        }
-    }
-}
-
-tasks.named("preBuild").configure {
-    dependsOn("copyLicenseReportToAssets")
 }

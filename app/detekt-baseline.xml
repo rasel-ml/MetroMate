@@ -52,6 +52,6 @@
     <ID>UnusedPrivateProperty:NfcManager.android.kt$NFCManager$private var pendingIntent: PendingIntent? = null</ID>
     <ID>UseRequire:TransactionParser.kt$TransactionParser$throw IllegalArgumentException("Invalid block size")</ID>
     <ID>VariableNaming:FareCalculatorViewModel.kt$FareCalculatorViewModel$private val MRT_PASS_DISCOUNT = 0.10f // 10% discount for MRT/Rapid Pass</ID>
-    <ID>WildcardImport:TimestampService.kt$import mrtbuddy.composeapp.generated.resources.*</ID>
+    <ID>WildcardImport:TimestampService.kt$import app.mrm.metromate.generated.resources.*</ID>
   </CurrentIssues>
 </SmellBaseline>

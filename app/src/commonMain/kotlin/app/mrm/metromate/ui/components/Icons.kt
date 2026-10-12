@@ -4,10 +4,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.calculate
-import mrtbuddy.composeapp.generated.resources.card
-import mrtbuddy.composeapp.generated.resources.history
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.calculate
+import app.mrm.metromate.generated.resources.card
+import app.mrm.metromate.generated.resources.history
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

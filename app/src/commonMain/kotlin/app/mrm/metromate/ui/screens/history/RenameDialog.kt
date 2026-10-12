@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.cancel
-import mrtbuddy.composeapp.generated.resources.rename
-import mrtbuddy.composeapp.generated.resources.renameCard
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.cancel
+import app.mrm.metromate.generated.resources.rename
+import app.mrm.metromate.generated.resources.renameCard
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

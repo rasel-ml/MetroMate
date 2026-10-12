@@ -21,13 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.cancel
-import mrtbuddy.composeapp.generated.resources.delete
-import mrtbuddy.composeapp.generated.resources.deleteCard
-import mrtbuddy.composeapp.generated.resources.deleteCardConfirm
-import mrtbuddy.composeapp.generated.resources.noCardsFound
-import mrtbuddy.composeapp.generated.resources.scanCardPrompt
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.cancel
+import app.mrm.metromate.generated.resources.delete
+import app.mrm.metromate.generated.resources.deleteCard
+import app.mrm.metromate.generated.resources.deleteCardConfirm
+import app.mrm.metromate.generated.resources.noCardsFound
+import app.mrm.metromate.generated.resources.scanCardPrompt
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 

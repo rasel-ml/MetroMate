@@ -1,24 +1,24 @@
 package app.mrm.metromate.nfc.service
 
 import androidx.compose.runtime.Composable
-import mrtbuddy.composeapp.generated.resources.Res
-import mrtbuddy.composeapp.generated.resources.agargaon
-import mrtbuddy.composeapp.generated.resources.bangladeshSecretariat
-import mrtbuddy.composeapp.generated.resources.bijoySarani
-import mrtbuddy.composeapp.generated.resources.dhakaUniversity
-import mrtbuddy.composeapp.generated.resources.farmgate
-import mrtbuddy.composeapp.generated.resources.kamalapur
-import mrtbuddy.composeapp.generated.resources.karwanBazar
-import mrtbuddy.composeapp.generated.resources.kazipara
-import mrtbuddy.composeapp.generated.resources.mirpur10
-import mrtbuddy.composeapp.generated.resources.mirpur11
-import mrtbuddy.composeapp.generated.resources.motijheel
-import mrtbuddy.composeapp.generated.resources.pallabi
-import mrtbuddy.composeapp.generated.resources.shahbagh
-import mrtbuddy.composeapp.generated.resources.shewrapara
-import mrtbuddy.composeapp.generated.resources.uttaraCenter
-import mrtbuddy.composeapp.generated.resources.uttaraNorth
-import mrtbuddy.composeapp.generated.resources.uttaraSouth
+import app.mrm.metromate.generated.resources.Res
+import app.mrm.metromate.generated.resources.agargaon
+import app.mrm.metromate.generated.resources.bangladeshSecretariat
+import app.mrm.metromate.generated.resources.bijoySarani
+import app.mrm.metromate.generated.resources.dhakaUniversity
+import app.mrm.metromate.generated.resources.farmgate
+import app.mrm.metromate.generated.resources.kamalapur
+import app.mrm.metromate.generated.resources.karwanBazar
+import app.mrm.metromate.generated.resources.kazipara
+import app.mrm.metromate.generated.resources.mirpur10
+import app.mrm.metromate.generated.resources.mirpur11
+import app.mrm.metromate.generated.resources.motijheel
+import app.mrm.metromate.generated.resources.pallabi
+import app.mrm.metromate.generated.resources.shahbagh
+import app.mrm.metromate.generated.resources.shewrapara
+import app.mrm.metromate.generated.resources.uttaraCenter
+import app.mrm.metromate.generated.resources.uttaraNorth
+import app.mrm.metromate.generated.resources.uttaraSouth
 import org.jetbrains.compose.resources.stringResource
 
 object StationService {
