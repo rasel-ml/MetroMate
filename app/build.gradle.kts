@@ -82,8 +82,8 @@ android {
         applicationId = "app.mrm.metromate"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 26
-        versionName = "0.0.26"
+        versionCode = 1
+        versionName = "1.0.0"
         // App only ships English + Bangla strings; drop translations of every library
         androidResources {
             localeFilters += listOf("en", "bn")
@@ -117,18 +117,17 @@ android {
     // KEY_PASSWORD) is only needed for a signature that's meant to last across
     // updates (e.g. Play Store). Without it, release builds fall back to the
     // debug keystore so the APK is still installable for local/CI testing.
-    val hasReleaseKeystore =
-        file("keystore.jks").let { it.exists() && it.length() > 0 } &&
-            !System.getenv("KEYSTORE_PASSWORD").isNullOrBlank()
-
+        // Release builds are always signed with the real release keystore,
+    // decoded from the KEYSTORE secret in CI (see .github/workflows/build-release.yml).
+    // No debug-signing fallback: if these env vars are missing, the build fails.
     signingConfigs {
         create("release") {
-            storeFile = file("keystore.jks")
-            storePassword = System.getenv("KEYSTORE_PASSWORD")
-            keyAlias = System.getenv("KEY_ALIAS")
-            keyPassword = System.getenv("KEY_PASSWORD")
+            storeFile = file("MetroMate.p12")
+            storeType = "PKCS12"
+            storePassword = System.getenv("KEYSTORE_PASS")
+            keyAlias = System.getenv("KEY")
+            keyPassword = System.getenv("KEY_PASS")
 
-            // Optional, specify signing versions used
             enableV1Signing = true
             enableV2Signing = true
         }
@@ -144,13 +143,9 @@ android {
                 "proguard-rules.pro",
             )
         }
+        
         getByName("release") {
-            signingConfig =
-                if (hasReleaseKeystore) {
-                    signingConfigs.getByName("release")
-                } else {
-                    signingConfigs.getByName("debug")
-                }
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -159,6 +154,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
