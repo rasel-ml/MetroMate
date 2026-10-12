@@ -3,6 +3,10 @@ name: Build release APK
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,9 +37,6 @@ jobs:
           KEY_PASS: ${{ secrets.KEY_PASS }}
         run: ./gradlew :app:assembleRelease --stacktrace
 
-      - name: Report APK sizes
-        run: ls -lh app/build/outputs/apk/release/*.apk
-
       - name: Upload APK artifact
         uses: actions/upload-artifact@v7
         with:
@@ -52,7 +53,7 @@ jobs:
           echo "code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ steps.version.outputs.name }}
           name: MetroMate v${{ steps.version.outputs.name }}
