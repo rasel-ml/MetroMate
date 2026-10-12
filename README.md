@@ -1,15 +1,15 @@
 <img src=".github/raw/banner.webp" alt="App Banner" width="100%"></img>
 <p align="center"></p>
-<h1 align="center"><img src=".github/raw/icon.webp" alt="App Icon" height="35" width="35">  <b>MetroMate</b></h1>
+<h1 align="center"><img style="vertical-align: middle;" src=".github/raw/icon.webp" alt="App Icon" height="35" width="35">  <b>MetroMate</b></h1>
 <p align="center">A convenient Android app for checking your Dhaka MRT Card balance on the go.</p>
 
 ## Features
 - Completely offline.
 - Check your balance with just one tap.
 - Works with both MRT Pass and Rapid Pass.
-- View transaction history.[^2]
+- View transaction history.[^1]
 - Travel fare calculator.
-[^2]: The card stores only the 20 most recent transactions. Regular scans let you maintain a history of thousands of transactions on your phone.
+[^1]: The card stores only the 20 most recent transactions. Regular scans let you maintain a history of thousands of transactions on your phone.
 
 > [!IMPORTANT]
 > Your phone must be NFC-compatible to use the app.
