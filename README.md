@@ -1,6 +1,6 @@
-<img src=".github/raw/banner.png" alt="App Banner" width="100%"></img>
+<img src=".github/raw/banner.webp" alt="App Banner" width="100%"></img>
 <p align="center"></p>
-<!-- <h1 align="center"><img src=".github/raw/icon.png" alt="App Icon" height="30" width="30">  <b>MetroMate</b></h1> -->
+<!-- <h1 align="center"><img src=".github/raw/icon.webp" alt="App Icon" height="30" width="30">  <b>MetroMate</b></h1> -->
 <h1 align="center"><b>MetroMate</b></h1>
 <p align="center">A convenient Android app for checking your Dhaka MRT Card balance on the go.</p>
 
@@ -14,6 +14,15 @@
 
 > [!IMPORTANT]
 > Your phone must be NFC-compatible to use the app.
+
+## Screenshots
+
+<div><img src=".github/raw/ss1.webp" width="32%"></img>
+<img src=".github/raw/ss2.webp" width="32%"></img>
+<img src=".github/raw/ss3.webp" width="32%"></img></div>
+<div><img src=".github/raw/ss4.webp" width="32%"></img>
+<img src=".github/raw/ss5.webp" width="32%"></img>
+<img src=".github/raw/ss6.webp" width="32%"></img></div>
 
 ## Acknowledgements
 
