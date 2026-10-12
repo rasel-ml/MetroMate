@@ -1,6 +1,6 @@
 <img src=".github/raw/banner.webp" alt="App Banner" width="100%"></img>
 <p align="center"></p>
-<h1 align="center"><img style="vertical-align: middle;" src=".github/raw/icon.webp" alt="App Icon" height="35" width="35">  <b>MetroMate</b></h1>
+<h1 align="center"><span><img src=".github/raw/icon.webp" alt="App Icon" height="35" width="35"></span><span><b>MetroMate</b></span></h1>
 <p align="center">A convenient Android app for checking your Dhaka MRT Card balance on the go.</p>
 
 ## Features
